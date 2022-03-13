@@ -1,2 +1,2 @@
-# cross_bar
-Syntacore task cross-bar
+# Cross-bar 2x2
+Syntacore task
