@@ -31,7 +31,7 @@ end
  //=================================================
  // Random timer write/read memory
  //=================================================
-always @(posedge clk or negedge resetn) begin
+always_ff @(posedge clk or negedge resetn) begin
     if (!resetn) begin
         timer <= 32'h0;
     end
