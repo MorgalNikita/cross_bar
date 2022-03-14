@@ -1,11 +1,11 @@
 quit -sim
 
 vlib work
-vlog  rtl/master_cpu.v
-vlog  rtl/slave_ram.v
-vlog  rtl/cross_bar.v
-vlog  rtl/round_robin.v
-vlog  tb/tb.v
+vlog -sv rtl/master_cpu.sv
+vlog -sv rtl/slave_ram.sv
+vlog -sv rtl/cross_bar.sv
+vlog -sv rtl/round_robin.sv
+vlog -sv tb/tb.sv
 
 vsim -novopt tb
 
@@ -42,11 +42,6 @@ add wave -position end -radix hex  -group SLAVE_2 sim:/tb/slave_2_rdata
 add wave -position end -radix hex  -group SLAVE_2 sim:/tb/slave_2_ack
 
 
-
 add wave -position end   -radix hex  -group ROUND_ROBIN sim:/tb/cross_bar/round_robin_inst/grnt
-add wave -position end  sim:/tb/cross_bar/slave_2_read_ok_shift
-add wave -position end  sim:/tb/cross_bar/slave_2_read_ok
-add wave -position end  sim:/tb/cross_bar/slave_1_read_ok_shift
-add wave -position end  sim:/tb/cross_bar/slave_1_read_ok
 
 run 2 ns
