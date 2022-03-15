@@ -224,18 +224,22 @@ always_ff @(posedge clk or negedge resetn) begin
 				else if (!master_1_addr[31] && slave_1_read_ok) begin
 					master_1_ack 	<= 0;
 					master_1_rdata 	<=slave_1_rdata;
+					master_2_ack	<= 0;
 				end
 				else if (master_1_addr[31] && slave_2_read_ok) begin
 					master_1_ack <= 0;
 					master_1_rdata <=slave_2_rdata;
+					master_2_ack	<=0;
 				end
 				else if (!master_2_addr[31] && slave_1_read_ok) begin
 					master_2_ack <= 0;
-					master_2_rdata <=slave_2_rdata;
+					master_2_rdata <=slave_1_rdata;
+					master_1_ack <= 0;
 				end
 				else if (master_2_addr[31] && slave_2_read_ok) begin
 					master_2_ack <= 0;
 					master_2_rdata <=slave_2_rdata;
+					master_1_ack <= 0;
 				end
 			end
 		end
@@ -260,19 +264,20 @@ always_ff @(posedge clk or negedge resetn) begin
 						end
 					end
 					else begin
-						if (slave_1_ack && (slave_1_addr[31] == master_1_addr[31]))begin
+						if (slave_1_ack && (slave_1_addr == master_1_addr))begin
 							master_1_ack	<= slave_1_ack;
 							master_1_rdata	<= slave_1_rdata;
 						end
-						else if (slave_1_ack && (slave_1_addr[31] == master_2_addr[31]))begin
+						else if (slave_1_ack && (slave_1_addr == master_2_addr))begin
 							master_2_ack	<= slave_1_ack;
 							master_2_rdata	<= slave_1_rdata;
 						end
-						else if (slave_2_ack && (slave_2_addr[31] == master_1_addr[31]))begin
+						else if (slave_2_ack && (slave_2_addr == master_1_addr))begin
 							master_1_ack	<= slave_2_ack;
 							master_1_rdata	<= slave_2_rdata;
+							master_2_ack	<= slave_1_ack;
 						end
-						else if (slave_2_ack && (slave_2_addr[31] == master_2_addr[31]))begin
+						else if (slave_2_ack && (slave_2_addr == master_2_addr))begin
 							master_2_ack	<= slave_2_ack;
 							master_2_rdata	<= slave_2_rdata;
 							master_1_ack	<= slave_1_ack;
