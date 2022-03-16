@@ -3,21 +3,27 @@
 //=================================================
 module slave_ram(
 
-	input                   clk,            //GLOBAL CLK
-	input                   resetn,         //GLOBAL RST
-
-	input                   slave_1_req,    //SLAVE INTERFACE
-	input           [31:0]  slave_1_addr,
-	input                   slave_1_cmd,
-	input           [31:0]  slave_1_wdata,
-	output logic            slave_1_ack,
-	output logic    [31:0]  slave_1_rdata
+	input                                       clk,            //GLOBAL CLK
+	input                                       resetn,         //GLOBAL RST
+    master_slave_interface.slave_interface     	slave           //SLAVE INTERFACE
 );
 
-    logic [31:0] mem_slave_1 [0:255];
-    logic [31:0] timer;
-    logic done;
-    integer i;
+
+
+logic                   slave_1_req;    //SLAVE INTERFACE
+logic           [31:0]  slave_1_addr;
+logic                   slave_1_cmd;
+logic           [31:0]  slave_1_wdata;
+logic                   slave_1_ack;
+logic           [31:0]  slave_1_rdata;
+
+
+
+
+logic [31:0] mem_slave_1 [0:255];
+logic [31:0] timer;
+logic done;
+integer i;
 
  //=================================================
  // Initial memory
@@ -80,6 +86,17 @@ end
         slave_1_rdata   <= 32'hx;
     end
 end
+
+
+//=================================================
+// Global assigning
+//=================================================
+assign		slave.s_m_ack   = slave_1_ack;
+assign		slave.s_m_rdata = slave_1_rdata;
+assign		slave_1_req     = slave.m_s_req;
+assign		slave_1_cmd     = slave.m_s_cmd;
+assign		slave_1_wdata   = slave.m_s_wdata;
+assign		slave_1_addr    = slave.m_s_addr;
 
 assign done = (timer % $urandom_range(3,2) == 0) ? 1:0;
 
