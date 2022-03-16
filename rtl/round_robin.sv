@@ -48,6 +48,9 @@ always_ff @(posedge clk or negedge resetn) begin
     else if (timer_start) begin
         timer <= timer + 1;
     end
+    else if (req == 2'b11) begin
+        timer <= timer + 1;
+    end
     else timer <= 32'h0;
 end
 
@@ -80,7 +83,6 @@ always_ff @(posedge clk or negedge resetn) begin
             else if(req == 2'b10) begin
                 grnt <= 2'b10;
             end
-
             else begin
 //=================================================
  // New logic output req to slaves  pulse
@@ -106,8 +108,8 @@ always_ff @(posedge clk or negedge resetn) begin
                 end
                 end
             end
-        else if (!timer_start && timer == 1)
-        ring_cnt <= ~ring_cnt;
+            else if (!timer_start && timer == 1)
+                ring_cnt <= ~ring_cnt;
     end
 end
 
