@@ -276,10 +276,10 @@ assign	master_2.m_s_wdata	= slave_2_wdata;
 //=================================================
 assign req_m1	=	(master_1_req && master_1_cmd)						? 	1:
 			(master_1_req && !master_1_cmd)						?	1:
-			(!master_1_req && (slave_1_read_ok_shift|| slave_2_read_ok_shift))	?	1:0;
+			(!master_1_req && (slave_1_read_ok|| slave_2_read_ok))	?	1:0;
 assign req_m2	=	(master_2_req && master_2_cmd)						?	1:
 			(master_2_req && !master_2_cmd)						?	1:
-			(!master_2_req && (slave_2_read_ok_shift|| slave_1_read_ok_shift))	?	1:0;
+			(!master_2_req && (slave_2_read_ok|| slave_1_read_ok))	?	1:0;
 
 
 assign req = ((master_1_addr[31] == master_2_addr[31])) ? {req_m2,req_m1} : 2'b0;
