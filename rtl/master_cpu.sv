@@ -1,5 +1,5 @@
 //=========================================================
-// Simple masters not synt module for testing 2x2 cross-bar
+// Simple master, not synt module for testing 2x2 cross-bar
 //=========================================================
 module master_cpu#(
 parameter RANDOMIZATION = 1
