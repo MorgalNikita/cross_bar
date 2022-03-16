@@ -70,10 +70,10 @@ cross_bar cross_bar(
 	.clk		(clk				),
 	.resetn		(resetn				),
 
-	.master_1	(master_1_i.master_interface	),
-	.master_2	(master_2_i.master_interface	),
-	.slave_1	(slave_1_i.slave_interface	),
-	.slave_2	(slave_2_i.slave_interface	)
+	.master_1	(slave_1_i.master_interface	),
+	.master_2	(slave_2_i.master_interface	),
+	.slave_1	(master_1_i.slave_interface	),
+	.slave_2	(master_2_i.slave_interface	)
 );
 
 endmodule
